@@ -1,5 +1,6 @@
 package me.aRt3m1s.ls;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -33,6 +34,15 @@ public class lsEL extends EntityListener{
                         double distance = damagee.getLocation().distance(player.getLocation());
                         int finalDamage = getFinalDamage(distance, ee.getDamage());
                         ee.setDamage(finalDamage);
+                        if(plugin.config.getInt("LongShot.distance/BLOCKS-damagePlus", 1)<=0){
+                            if(ee.getEntity() instanceof Player){
+                                Player pDamagee = (Player) ee.getEntity();
+                                if(pDamagee.isDead()){
+                                    pDamagee.getServer().broadcastMessage(ChatColor.RED+pDamagee.getName()+
+                                            " has been sniped by "+player.getName());
+                                }
+                            }
+                        }
                     }
                 }
             }
