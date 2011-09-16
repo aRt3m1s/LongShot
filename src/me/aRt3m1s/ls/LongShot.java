@@ -16,7 +16,6 @@ import java.util.logging.Logger;
  */
 public class LongShot extends JavaPlugin{
     private static final Logger log = Logger.getLogger("Minecraft");
-    private static final String pPrefix = "[LS]";
     private final lsEL el = new lsEL(this);
     Configuration config;
     /**
