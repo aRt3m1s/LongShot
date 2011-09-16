@@ -31,7 +31,7 @@ public class lsEL extends EntityListener{
                     if(ee.getEntity() instanceof LivingEntity){
                         LivingEntity damagee = (LivingEntity) ee.getEntity();
                         double distance = damagee.getLocation().distance(player.getLocation());
-                        int finalDamage = getFinalDamage(player, distance, ee.getDamage());
+                        int finalDamage = getFinalDamage(distance, ee.getDamage());
                         ee.setDamage(finalDamage);
                     }
                 }
@@ -39,7 +39,7 @@ public class lsEL extends EntityListener{
         }
     }
 
-    private int getFinalDamage(Player player, double distance, int damage) {
+    private int getFinalDamage(double distance, int damage) {
         int dBdP = plugin.config.getInt("LongShot.distance/BLOCKS-damagePlus", 1);
         boolean dTOF = plugin.config.getBoolean("LongShot.critical-hits.double", true);
         int range = plugin.config.getInt("LongShot.critical-hits.random-range", 20);
