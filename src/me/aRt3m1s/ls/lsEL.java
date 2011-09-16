@@ -4,9 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.*;
 
 import java.util.Random;
 
@@ -34,13 +32,24 @@ public class lsEL extends EntityListener{
                         double distance = damagee.getLocation().distance(player.getLocation());
                         int finalDamage = getFinalDamage(distance, ee.getDamage());
                         ee.setDamage(finalDamage);
-                        if(plugin.config.getInt("LongShot.distance/BLOCKS-damagePlus", 1)<=0){
-                            if(ee.getEntity() instanceof Player){
-                                Player pDamagee = (Player) ee.getEntity();
-                                if(pDamagee.isDead()){
-                                    pDamagee.getServer().broadcastMessage(ChatColor.RED+pDamagee.getName()+
-                                            " has been sniped by "+player.getName());
-                                }
+                        ee.setCancelled(false);
+                    }
+                }
+            }
+        }
+    }
+    public void onEntityDeath(EntityDeathEvent event){
+        if(event.getEntity() instanceof Player){
+            Player player = (Player) event.getEntity();
+            EntityDamageEvent e = player.getLastDamageCause();
+            if(e!=null){
+                if(e.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)){
+                    if(e instanceof EntityDamageByEntityEvent){
+                        if(((EntityDamageByEntityEvent) e).getDamager() instanceof Player){
+                            if(plugin.config.getInt("LongShot.distance/BLOCKS-damagePlus", 1)<=0){
+                                Player damager = (Player)((EntityDamageByEntityEvent) e).getDamager();
+                                player.getServer().broadcastMessage(ChatColor.RED+player.getName()+
+                                        " has been sniped by "+damager.getName());
                             }
                         }
                     }

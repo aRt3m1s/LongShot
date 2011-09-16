@@ -53,6 +53,7 @@ public class LongShot extends JavaPlugin{
         config.save();
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.ENTITY_DAMAGE, el, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.ENTITY_DEATH, el, Event.Priority.Normal, this);
         log.info(getDescription().getName()+" version v"+getDescription().getVersion()+" is Enabled!");
     }
 }
