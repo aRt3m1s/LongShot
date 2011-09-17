@@ -48,8 +48,10 @@ public class lsEL extends EntityListener{
                         if(((EntityDamageByEntityEvent) e).getDamager() instanceof Player){
                             if(plugin.config.getInt("LongShot.distance/BLOCKS-damagePlus", 1)<=0){
                                 Player damager = (Player)((EntityDamageByEntityEvent) e).getDamager();
-                                player.getServer().broadcastMessage(ChatColor.RED+player.getName()+
-                                        " has been sniped by "+damager.getName());
+                                for(Player allOnlinePlayer: plugin.getServer().getOnlinePlayers()){
+                                    allOnlinePlayer.sendMessage(ChatColor.GOLD+player.getName()+
+                                            " has been sniped by "+damager.getName());
+                                }
                             }
                         }
                     }
