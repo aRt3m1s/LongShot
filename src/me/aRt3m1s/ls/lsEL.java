@@ -20,6 +20,7 @@ public class lsEL extends EntityListener{
     public lsEL(LongShot instance) {
         plugin = instance;
     }
+    @EventHandler
     public void onEntityDamage(EntityDamageEvent event){
         if(event instanceof EntityDamageByEntityEvent){
             EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent)event;
@@ -38,6 +39,7 @@ public class lsEL extends EntityListener{
             }
         }
     }
+    @EventHandler
     public void onEntityDeath(EntityDeathEvent event){
         if(event.getEntity() instanceof Player){
             Player player = (Player) event.getEntity();
@@ -61,9 +63,9 @@ public class lsEL extends EntityListener{
     }
 
     private int getFinalDamage(double distance, int damage) {
-        int dBdP = plugin.config.getInt("LongShot.distance/BLOCKS-damagePlus", 1);
-        boolean dTOF = plugin.config.getBoolean("LongShot.critical-hits.double", true);
-        int range = plugin.config.getInt("LongShot.critical-hits.random-range", 20);
+        int dBdP = plugin.getConfig().getInt("LongShot.distance/BLOCKS-damagePlus", 1);
+        boolean dTOF = plugin.getConfig().getBoolean("LongShot.critical-hits.double", true);
+        int range = plugin.getConfig().getInt("LongShot.critical-hits.random-range", 20);
         if(dBdP>0){
             damage += (int)distance/dBdP;
             return damage;
