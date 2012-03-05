@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class LongShot extends JavaPlugin{
     private static final Logger log = Logger.getLogger("Minecraft");
     private final lsEL el = new lsEL(this);
-    Configuration config;
+    FileConfiguration config;
     /**
      * Called when this plugin is disabled
      */
@@ -31,9 +31,7 @@ public class LongShot extends JavaPlugin{
      */
     @Override
     public void onEnable() {
-        config = getConfiguration();
-        config.load();
-        config.setHeader("###########################################################",
+        getConfig().setHeader("###########################################################",
                          "# @critical-hits                                          #",
                          "#   @double: true                                         #",
                          "#     the damage will be doubled                          #",
@@ -47,13 +45,12 @@ public class LongShot extends JavaPlugin{
                          "#   if >0, will divide the distance by this number and    #",
                          "#    add it to the damage                                 #",
                          "###########################################################");
-        config.getBoolean("LongShot.critical-hits.double", true);
-        config.getInt("LongShot.critical-hits.random-range", 6);
-        config.getInt("LongShot.distance/BLOCKS-damagePlus", 10);
-        config.save();
+        getConfig().getBoolean("LongShot.critical-hits.double", true);
+        getConfig().getInt("LongShot.critical-hits.random-range", 6);
+        getConfig().getInt("LongShot.distance/BLOCKS-damagePlus", 10);
+        saveConfig();
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvent(Event.Type.ENTITY_DAMAGE, el, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.ENTITY_DEATH, el, Event.Priority.Normal, this);
+        pm.registerEvent(el, this);
         log.info(getDescription().getName()+" version v"+getDescription().getVersion()+" is Enabled!");
     }
 }
